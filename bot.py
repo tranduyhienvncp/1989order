@@ -89,8 +89,14 @@ async def main() -> None:
 # Chạy bot
 if __name__ == "__main__":
     import sys
+    import asyncio
+
     if sys.platform == "win32":
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except RuntimeError as e:
+        if str(e) == "This event loop is already running":
+            pass  # Bỏ qua lỗi vòng lặp đang chạy
 
